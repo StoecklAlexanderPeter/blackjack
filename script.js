@@ -12,6 +12,7 @@ let suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'],
 
 // DOM variables
 let textArea = document.getElementById('text-area'),
+  table = document.getElementById('table'),
   dealerHand = document.getElementById('dealerHand'),
   playerHand = document.getElementById('playerHand'),
   newGameButton = document.getElementById('new-game-button'),
@@ -34,6 +35,8 @@ stayButton.style.display = 'none';
 showStatus();
 
 newGameButton.addEventListener('click', function() {
+  removeChildren(dealerHand);
+  removeChildren(playerHand);
   textArea.innerText = "";
   gameStarted = true;
   gameOver = false;
@@ -158,7 +161,7 @@ function checkForEndOfGame() {
 
   if (gameOver) {
     // let dealer take cards
-    while (dealerScore < playerScore && playerScore <= 21 && dealerScore <= 21) {
+    while (dealerScore < playerScore && playerScore <= 21 && dealerScore <= 16) {
       dealerCards.push(getNextCard());
       updateScores();
     }
@@ -230,8 +233,6 @@ function showStatus() {
     newGameButton.style.display = 'inline';
     hitButton.style.display = 'none';
     stayButton.style.display = 'none';
-    removeChildren(dealerHand);
-    removeChildren(playerHand);
     
   }
 }
