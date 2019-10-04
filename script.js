@@ -181,13 +181,17 @@ function checkForEndOfGame() {
 }
 
 function showStatus() {
-
+  removeChildren(playerHand);
+  removeChildren(dealerHand);
   for (let i = 0; i < dealerCards.length; i++) {
+    
     dealerHand.appendChild(createImage(dealerCards[i]));
+   
   }
 
   for (let i = 0; i < playerCards.length; i++) {
-    playerHand.appendChild(createImage(playerCards[i]));
+    
+     playerHand.appendChild(createImage(playerCards[i]));
   }
 
   if (!gameStarted) {
