@@ -20,3 +20,4 @@ School Project from Alexander Stoeckl, Jason Conzett, Luca Calderone, Marko Band
 ### Todo:
 - (Hajduk) Split
 - Game Table UI
+- Add Card Images
