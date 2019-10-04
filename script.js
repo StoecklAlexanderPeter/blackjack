@@ -6,15 +6,18 @@
 
 // Cards variables
 let suits = ['Hearts', 'Clubs', 'Diamonds', 'Spades'],
-  values = ['Ace', 'King', 'Queen', 'Jack', 'Ten', 'Nine', 'Eigth', 'Seven',
+  values = ['Ace', 'King', 'Queen', 'Jack', 'Ten', 'Nine', 'Eight', 'Seven',
     'Six', 'Five', 'Four', 'Three', 'Two'
   ];
 
 // DOM variables
 let textArea = document.getElementById('text-area'),
+  dealerHand = document.getElementById('dealerHand'),
+  playerHand = document.getElementById('playerHand'),
   newGameButton = document.getElementById('new-game-button'),
   hitButton = document.getElementById('hit-button'),
   stayButton = document.getElementById('stay-button');
+
 
 //Game variables
 let gameStarted = false,
@@ -31,6 +34,7 @@ stayButton.style.display = 'none';
 showStatus();
 
 newGameButton.addEventListener('click', function() {
+  textArea.innerText = "";
   gameStarted = true;
   gameOver = false;
   playerWon = false;
@@ -82,7 +86,14 @@ function shuffleDeck(deck) {
 }
 
 function getCardString(card) {
-  return card.value + " " + card.suit;
+  return card.value + "-" + card.suit;
+}
+
+function createImage(card) {
+  let img = document.createElement("img");
+  img.setAttribute('src', `images/${card.value}-${card.suit}.png`);
+  console.log(img.src)
+  return img;
 }
 
 function getNextCard() {
@@ -135,6 +146,12 @@ function updateScores() {
   playerScore = getScore(playerCards);
 }
 
+function removeChildren(div) {
+  while (div.firstChild) {
+    div.removeChild(div.firstChild);
+  }
+}
+
 function checkForEndOfGame() {
 
   updateScores();
@@ -164,23 +181,33 @@ function checkForEndOfGame() {
 }
 
 function showStatus() {
+
+  for (let i = 0; i < dealerCards.length; i++) {
+    dealerHand.appendChild(createImage(dealerCards[i]));
+  }
+
+  for (let i = 0; i < playerCards.length; i++) {
+    playerHand.appendChild(createImage(playerCards[i]));
+  }
+
   if (!gameStarted) {
     textArea.innerText = 'Welcome to Blackjack!';
     return;
   }
 
+  /*
   let dealerCardString = '';
   for (let i = 0; i < dealerCards.length; i++) {
-    dealerCardString += getCardString(dealerCards[i]) + '\n';
+    dealerCardString += createImage(dealerCards[i]) + '\n';
   }
 
   let playerCardString = '';
   for (let i = 0; i < playerCards.length; i++) {
-    playerCardString += getCardString(playerCards[i]) + '\n';
+    playerCardString += createImage(playerCards[i]) + '\n';
   }
-
+*/
   updateScores();
-
+/*
   textArea.innerText =
     'Dealer has:\n' +
     dealerCardString +
@@ -189,15 +216,18 @@ function showStatus() {
     'Player has:\n' +
     playerCardString +
     '(score: ' + playerScore + ')\n\n';
-
+*/
   if (gameOver) {
     if (playerWon) {
-      textArea.innerText += "YOU WIN!";
+      textArea.innerText += "\nYOU WIN!";
     } else {
-      textArea.innerText += "DEALER WINS!";
+      textArea.innerText += "\nDEALER WINS!";
     }
     newGameButton.style.display = 'inline';
     hitButton.style.display = 'none';
     stayButton.style.display = 'none';
+    removeChildren(dealerHand);
+    removeChildren(playerHand);
+    
   }
 }
