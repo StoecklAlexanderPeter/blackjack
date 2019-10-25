@@ -189,7 +189,7 @@ function showStatus() {
   if(gameStarted) {
     if(!gameOver) {
       let img = document.createElement("img");
-      img.setAttribute('src', `images/back.svg`);
+      img.setAttribute('src', `images/deck.png`);
       img.setAttribute('style', `height: 206px; width: 136px;`);
       dealerHand.appendChild(createImage(dealerCards[0]));
       dealerHand.appendChild(img);
