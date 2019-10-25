@@ -186,20 +186,22 @@ function checkForEndOfGame() {
 function showStatus() {
   removeChildren(playerHand);
   removeChildren(dealerHand);
-  for (let i = 0; i < dealerCards.length; i++) {
-    
-    dealerHand.appendChild(createImage(dealerCards[i]));
-   
+  if(gameStarted) {
+    if(!gameOver) {
+      let img = document.createElement("img");
+      img.setAttribute('src', `images/back.svg`);
+      img.setAttribute('style', `height: 206px; width: 136px;`);
+      dealerHand.appendChild(createImage(dealerCards[0]));
+      dealerHand.appendChild(img);
+    } else {
+      for (let i = 0; i < dealerCards.length; i++) {
+        dealerHand.appendChild(createImage(dealerCards[i]));
+      }
+    }
   }
 
   for (let i = 0; i < playerCards.length; i++) {
-    
      playerHand.appendChild(createImage(playerCards[i]));
-  }
-
-  if (!gameStarted) {
-    textArea.innerText = 'Welcome to Blackjack!';
-    return;
   }
 
   /*
@@ -226,9 +228,9 @@ function showStatus() {
 */
   if (gameOver) {
     if (playerWon) {
-      textArea.innerText += "\nYOU WIN!";
+      textArea.innerHTML += "<h2 class='text-warning'>Winner Winner Chicken Dinner!</h2>";
     } else {
-      textArea.innerText += "\nDEALER WINS!";
+      textArea.innerHTML += "<h2 class='text-danger'>YOU LOST!</h2>";
     }
     newGameButton.style.display = 'inline';
     hitButton.style.display = 'none';
